@@ -10,6 +10,8 @@ ESX = nil
 QBCore = nil
 vRP, vRPclient = nil, nil
 
+local QueServer = GetConvar("server_number", "1")
+
 if Config.Framework == 'esx' then
     TriggerEvent(Config.FrameworkTriggers.main, function(obj) ESX = obj end)
 
@@ -124,7 +126,7 @@ AddEventHandler('cd_easytime:ForceUpdate', function(data)
 end)
 
 local function LoadSettings()
-    local settings = json.decode(LoadResourceFile(resource_name,'./settings.txt'))
+    local settings = json.decode(LoadResourceFile(resource_name,'./settings_' .. QueServer .. '.txt'))
     self.weather = settings.weather or 'CLEAR'
     self.hours = settings.hours or 08
     self.mins = settings.mins or 00
@@ -154,7 +156,7 @@ Citizen.CreateThread(function()
             if self.mins >= 60 then self.mins = 0 self.hours = self.hours+1 end
             if self.hours >= 24 then self.hours = 0 end
 
-            if TimeCounter == 5 then
+            if TimeCounter == 50 then
                 HasTriggered = false
             end
             if not HasTriggered then
@@ -177,10 +179,12 @@ Citizen.CreateThread(function()
                             end
                             TimesChanged = TimesChanged+1
                             LastWeatherTable[d] = d
-                            self.weather = d
-                            TriggerClientEvent('cd_easytime:SyncWeather', -1, {weather = self.weather, instantweather = self.instantweather})
-                            print('^3['..resource_name..'] - Weather changed to '..self.weather..'^0')
-                            TableCleared = false
+							if self.weather ~= d then
+								self.weather = d
+								TriggerClientEvent('cd_easytime:SyncWeather', -1, {weather = self.weather, instantweather = self.instantweather})
+								print('^3['..resource_name..'] - Weather changed to '..self.weather..'^0')
+								TableCleared = false
+							end
                             break
                         end
                     end
@@ -250,7 +254,7 @@ AddEventHandler('cd_easytime:ToggleInstantChange:Weather', function(boolean)
 end)
 
 local function SaveSettngs()
-    SaveResourceFile(resource_name,'settings.txt', json.encode(self), -1)
+    SaveResourceFile(resource_name,'settings_' .. QueServer .. '.txt', json.encode(self), -1)
     print('^3['..resource_name..'] - Settings Saved^0')
 end
 
@@ -314,7 +318,6 @@ function PermissionsCheck(source)
             end
         end
         return false
-
     elseif Config.Framework == 'aceperms' then
         if IsPlayerAceAllowed(source, 'command.'..Config.Command.OpenUI) then
             return true
