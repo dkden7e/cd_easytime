@@ -10,18 +10,29 @@ ESX, QBCore = nil, nil
 
 Citizen.CreateThread(function()
     if Config.Framework == 'esx' then
+        Citizen.CreateThread(function()
+            Wait(100)
+            while true do
+                Wait(50)
+                if NetworkIsSessionStarted() then
+                    TriggerServerEvent('cd_easytime:SyncMe', {time = true, weather = true})
+                    break
+                end
+            end
+        end)
         while ESX == nil do
             TriggerEvent(Config.FrameworkTriggers.main, function(obj) ESX = obj end)
-            Wait(100)
+            Wait(25)
         end
 
         RegisterNetEvent(Config.FrameworkTriggers.load)
         AddEventHandler(Config.FrameworkTriggers.load, function(xPlayer)
             ESX.PlayerData = xPlayer
-            Wait(3000)
-            TriggerServerEvent('cd_easytime:SyncMe', {time = true, weather = true})
+            --Wait(0)
+            --TriggerServerEvent('cd_easytime:SyncMe', {time = true, weather = true})
         end)
     
+
     elseif Config.Framework == 'qbcore' then
         while QBCore == nil do
             TriggerEvent(Config.FrameworkTriggers.main, function(obj) QBCore = obj end)
@@ -37,6 +48,7 @@ Citizen.CreateThread(function()
             TriggerServerEvent('cd_easytime:SyncMe', {time = true, weather = true})
         end)
     
+
     elseif Config.Framework == 'vrp' or Config.Framework == 'aceperms' or Config.Framework == 'identifiers' then
         Citizen.CreateThread(function()
             Wait(3000)
@@ -72,6 +84,7 @@ local PauseSync = {}
 PauseSync.state = false
 local SyncHours = nil
 local SyncMins = nil
+
 
 RegisterNetEvent('cd_easytime:PauseSync')
 AddEventHandler('cd_easytime:PauseSync', function(boolean, time)

@@ -11,7 +11,7 @@ function L(cd) if Locales[Config.Language][cd] then return Locales[Config.Langua
 
 
 Config.Framework = 'esx' ---[ 'esx' / 'qbcore' / 'vrp' / 'aceperms' / 'identifiers', 'other' ] Choose your framework (by framework we mean choose the permission system you want to use).
-Config.Language = 'EN' --[ 'EN' / 'FR' / 'ES' ] You can add your own locales to the Locales.lua. But make sure to add it here.
+Config.Language = 'ES' --[ 'EN' / 'FR' / 'ES' ] You can add your own locales to the Locales.lua. But make sure to add it here.
 
 Config.FrameworkTriggers = { --You can change the esx/qbcore events (IF NEEDED).
     main = 'esx:getSharedObject',   --ESX = 'esx:getSharedObject'   QBCORE = 'QBCore:GetObject'
@@ -57,8 +57,9 @@ Config.ThunderChance = 20 --The percent chance for it to thunder when raining ou
 Config.VehicleBlackoutEffect = false --Do you want the lights on vehicles to be turned off during blackouts?
 
 Config.WeatherGroups = { --These are the weather groups, it will cycle through each group from left to right making sure it cycles through low intensity rain to high intensity for example (48 mins for 1 full day cycle).
-    [1] = {'CLEAR', 'OVERCAST','EXTRASUNNY', 'CLOUDS'},--clear
-    [2] = {'CLEARING', 'RAIN', 'NEUTRAL', 'THUNDER'},--rain
-    [3] = {'SMOG', 'FOGGY'},--foggy
-    [4] = {'SNOWLIGHT', 'SNOW', 'BLIZZARD', 'XMAS'},--snow
+    --DEFAULT-- [1] = {'CLEAR', 'OVERCAST','EXTRASUNNY', 'CLOUDS'},--clear
+    --DEFAULT-- [2] = {'CLEARING', 'RAIN', 'NEUTRAL', 'THUNDER'},--rain
+    --DEFAULT-- [3] = {'SMOG', 'FOGGY'},--foggy
+    --DEFAULT-- [4] = {'SNOWLIGHT', 'SNOW', 'BLIZZARD', 'XMAS'},--snow
+	{'EXTRASUNNY'}
 }
