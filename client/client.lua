@@ -321,3 +321,7 @@ AddEventHandler('cd_easytime:StartTsunamiCountdown', function(boolean)
         TriggerServerEvent('cd_easytime:SyncMe')
     end
 end)
+
+function GetWeather()
+    return self
+end
