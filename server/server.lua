@@ -126,7 +126,7 @@ AddEventHandler('cd_easytime:ForceUpdate', function(data)
 end)
 
 local function LoadSettings()
-    local settings = json.decode(LoadResourceFile(resource_name,'./settings_' .. QueServer .. '.txt'))
+    local settings = json.decode(LoadResourceFile(resource_name,'./settings_' .. QueServer .. '.txt') or LoadResourceFile(resource_name,'./settings.txt'))
     self.weather = settings.weather or 'CLEAR'
     self.hours = settings.hours or 08
     self.mins = settings.mins or 00
